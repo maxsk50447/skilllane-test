@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <%= link_to 'Skillane', root_path, class: 'navbar-brand' %>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <% if !user_signed_in? %>
+        <li class="nav-item">
+            <%= link_to root_path, class: 'nav-link' do %>
+              <i class="fa fa-home" aria-hidden="true"></i> Home
+            <% end %>
+        </li>
+      <% end %>
+      <% if user_signed_in? %>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-book" aria-hidden="true"></i> Course
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <%= link_to 'Create course', new_course_path, class: 'dropdown-item' if user_signed_in? && teacher?(current_user) %>
+            <%= link_to 'Join course', courses_path, class: 'dropdown-item' %>
+            <!-- <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a> -->
+          </div>
+        </li>
+      <% end %>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <% if user_signed_in? %>
+        <li class="btn btn-outline btn-edit-user my-2 my-sm-0" >
+          <%= link_to  edit_user_registration_path do %>
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <%= current_user.first_name %>
+            (<%= current_user.role %>)
+          <% end %>
+        </li>
+        <li class="btn btn-sign-up my-2 my-sm-0" >
+          <%= link_to destroy_user_session_path, class: 'btn-sign-up-out-label' do %>
+            <i class="fa fa-sign-out" aria-hidden="true"></i> Sign out
+          <% end %>
+        </li>
+      <% else %>
+        <li class="btn btn-outline btn-log-in my-2 my-sm-0" >
+          <%= link_to new_user_session_path, class: 'btn-label' do %>
+            <i class="fa fa-sign-in"></i> Login
+          <% end %>
+        </li>
+        <li class="btn btn-outline btn-sign-up my-2 my-sm-0" >
+          <%= link_to new_user_registration_path, class: 'btn-sign-up-out-label' do %>
+            <i class="fa fa-user-plus"></i> Register
+          <% end %>
+        </li>
+      <% end %> 
+    </form>
+  </div>
+</nav>

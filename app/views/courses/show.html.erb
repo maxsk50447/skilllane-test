@@ -1,0 +1,68 @@
+<div class="form-layout h-100">
+  <div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+      <div class="content-section tab-content p-3">
+        <h2 class="font-weight-light">Course Description</h2>
+        <div class="row">
+          <div class="col-6">
+            <div class="clearfix">
+              <div class="float-left">
+                <span class="badge badge-success"><%= @course.date.gsub('/', '-').slice(0..9) %></span>
+              </div>
+              <div class="float-right">
+                <span class="badge badge-danger"><%= @course.date.gsub('/', '-').slice(@course.date.length-10..@course.date.length) %></span>
+              </div>
+            </div>
+            <% if @course.course_type.eql? 'Back-end-Development' %>
+              <%= image_tag("coding.png", alt: "coding", class: "img-fluid d-block mx-auto my-3") %>
+            <% else %>
+              <%= image_tag("web-design.png", alt: "web-design", class: "img-fluid d-block mx-auto my-3") %>
+            <% end %>
+            <h5 class="card-title"><%= @course.name %></h5>
+            <p class="card-text"><%= @course.description %></p>
+            <% if @course.course_type.eql? 'Back-end-Development' %>
+              <span class="badge badge-pill badge-danger my-3"><%= @course.course_type %></span>
+            <% else %>
+              <span class="badge badge-pill badge-primary my-3"><%= @course.course_type %></span>
+            <% end %>
+            <p class="text-muted">
+              <small>
+                Course by: <%= User.find(@course.user_id).fullname() %>
+              </small>
+            </P>
+            <p class="text-muted">
+              <small>
+                Student Maximum Amount: <%= @course.student_amount %>
+              </small>
+            </P>
+            <p class="text-muted">
+              <small>
+                Member Amount: <%= @course.users.count %>
+              </small>
+            </P>
+            <% if @course.users.count != @course.student_amount %>
+              <% if !readyApply?(current_user.first_name) %> 
+                <%= link_to apply_course_path(@course), class: 'btn btn-success', method: :post do %>
+                <i class="fa fa-check"></i> Apply
+                <% end %>
+              <% end %>
+            <% end %>
+            <%= link_to courses_path, class: 'action btn btn-danger' do %>
+              <i class="fa fa-repeat"></i> Back
+            <% end %>
+          </div>
+          <div class="col-6">
+            <h3 class="font-weight-light">Course Member <%= '(Course full)' if @course.users.count == @course.student_amount %></h3>
+            <% if @course.users.any? %>
+              <% @course.users.each_with_index do |user, index| %>
+                <%= index+1 %>. <%= user.fullname() %><br />
+              <% end %>
+            <% else %>
+              No Member now!
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

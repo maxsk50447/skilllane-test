@@ -1,0 +1,71 @@
+<div class="form-layout h-100">
+  <div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+      <div class="content-section tab-content p-3">
+        <%= form_for(:search, url: courses_path, method: :get) do |f| %>
+          <div class="form-row">
+            <div class="col">
+              <div class="form-group">
+                <%= f.text_field :date, class: 'form-control', data: { behavior: 'daterangepicker' }, value: date_from_parameters %>
+              </div>
+            </div>
+            <div class="input-group col-8">
+              <%= f.text_field :name, class: 'form-control enter-keyword-icon', placeholder: 'Search by Course Name...' %>
+              <div class="input-group-append">
+                <%= f.button fa_icon('search'), type: :submit, class: 'search_submit enter-keyword-icon' %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <div class="py-3">
+          <div class="row">
+            <% @courses.each do |course| %>
+              <div class="col-sm-6 col-md-4 col-lg-3 my-3">
+                <div class="card h-100">
+                  <div class="card-body text-center">
+                      <div class="clearfix">
+                        <div class="float-left">
+                          <span class="badge badge-success"><%= course.date.gsub('/', '-').slice(0..9) %></span>
+                        </div>
+                        <div class="float-right">
+                          <span class="badge badge-danger"><%= course.date.gsub('/', '-').slice(course.date.length-10..course.date.length) %></span>
+                        </div>
+                      </div>
+                      <% if course.course_type.eql? 'Back-end-Development' %>
+                        <%= image_tag("coding.png", alt: "coding", class: "img-fluid d-block mx-auto my-3") %>
+                      <% else %>
+                        <%= image_tag("web-design.png", alt: "web-design", class: "img-fluid d-block mx-auto my-3") %>
+                      <% end %>
+                      <h5 class="card-title"><%= course.name %></h5>
+                      <p class="card-text"><%= course.description %></p>
+                      <%= link_to 'LET\'S GO!!', course_path(course), class: "btn btn-dark d-block" %>
+                      <% if course.course_type.eql? 'Back-end-Development' %>
+                        <span class="badge badge-pill badge-danger my-3"><%= course.course_type %></span>
+                      <% else %>
+                        <span class="badge badge-pill badge-primary my-3"><%= course.course_type %></span>
+                      <% end %>
+                      <p class="text-muted">
+                        <small>
+                          Course by: <%= User.find(course.user_id).fullname() %>
+                        </small>
+                      </P>
+                      <p class="text-muted">
+                        <small>
+                          Student Maximum Amount: <%= course.student_amount %>
+                        </small>
+                      </P>
+                      <p class="text-muted">
+                        <small>
+                          Member Amount: <%= course.users.count %>
+                        </small>
+                      </P>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,93 @@
+<div class="form-layout h-100">
+  <div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+      <div class="content-section col-9 main-box px-3 py-5">
+        <%= image_tag("learning.png", alt: "Learning", class: "img-fluid d-block mx-auto my-3") %>
+        <h6 class="text-muted text-center mb-5">Edit user</h6>
+
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+          <div class="row">
+            <div class="form-group register-form-group col">
+              <label class="label-layout field-label-responsive" for="e-mail">E-mail</label>
+              <div class="input-group">
+                <%= f.email_field :email, class: "form-control", placeholder: "you@example.com", autofocus: true, autocomplete: "email" %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group register-form-group col-6">
+              <label class="label-layout field-label-responsive" for="password">Password</label>
+              <% if @minimum_password_length %>
+              <em>(<%= @minimum_password_length %> chars minimum)</em>
+              <% end %>
+              <div class="input-group">
+                <%= f.password_field :password, class: "form-control", placeholder: "Your password", autocomplete: "off" %>
+              </div>
+            </div>
+            <div class="form-group register-form-group col-6">
+              <label class="label-layout field-label-responsive" for="password_confirm">Confirm Password</label>						
+              <div class="input-group">
+                <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Confirm password", autocomplete: "off" %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group register-form-group col-6">
+              <label class="label-layout field-label-responsive" for="first_name">Firstname</label>						
+              <div class="input-group">
+                <%= f.text_field :first_name, class: "form-control", placeholder: "Your firstname", autofocus: true %>
+              </div>
+            </div>
+            <div class="form-group register-form-group col-6">
+              <label class="label-layout field-label-responsive" for="last_name">Lastname</label>						
+              <div class="input-group">
+                <%= f.text_field :last_name, class: "form-control", placeholder: "Your lastname", autofocus: true %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group register-form-group col-6">
+              <label class="label-layout field-label-responsive" for="citizen_id">Nickname</label>						
+              <div class="input-group">
+                <%= f.text_field :nick_name, class: "form-control", placeholder: "Your nickname", autofocus: true %>
+              </div>
+            </div>
+            <div class="form-group register-form-group col-6">
+              <label class="label-layout field-label-responsive" for="citizen_id">Birthday</label>						
+              <div class="input-group">
+                <%= f.date_field :birthday, class: "form-control", placeholder: "Your birthday", autofocus: true %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group register-form-group col-6">
+              <label class="label-layout field-label-responsive" for="citizen_id">Teacher / Student</label>						
+              <div class="input-group">
+                <%= f.select :role, User.roles.keys, class: "form-control", autofocus: true %>
+              </div>
+            </div>
+            <div class="form-group register-form-group col-6">
+              <label class="label-layout field-label-responsive" for="citizen_id">Gender</label>						
+              <div class="input-group">
+                <%= f.select :gender, ['Male', 'Female'], class: "form-control", autofocus: true %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group register-form-group col-6">
+              <label class="label-layout field-label-responsive" for="citizen_id">Need current password to update profile</label>						
+              <div class="input-group">
+                <%= f.password_field :current_password, class: "form-control", autofocus: true %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <%= f.button 'Edit User', type: :submit, class: 'btn btn-success' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
